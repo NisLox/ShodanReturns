@@ -10,11 +10,11 @@ public class Main {
 
     public static void main (String[] args) {
         Main main = new Main();
-        main.findAll("bbc.co.uk");
-        main.findIp("bbc.co.uk");
-        main.shodanReturnDomainAndIP("bbc.co.uk");
-        main.shodanReturnMinifiedBanner("151.101.0.81");
-        main.shodanHoneypotScore("151.101.0.81");
+//        main.findAll("bbc.co.uk");
+//        main.findIp("bbc.co.uk");
+//        main.shodanReturnDomainAndIP("bbc.co.uk");
+        main.shodanReturnMinifiedBanner("bbc.co.uk");
+//        main.shodanHoneypotScore("151.101.0.81");
     }
 
     private void findIp(String domain){
@@ -65,9 +65,17 @@ public class Main {
         }
     }
 
-    private void shodanReturnMinifiedBanner(String ipAddress){
-        OkHttpClient client = new OkHttpClient();
+    private void shodanReturnMinifiedBanner(String domain){
+            InetAddress tempIpAddress;
+            String ipAddress = null;
+        try {
+            tempIpAddress = InetAddress.getByName(domain);
 
+            ipAddress = tempIpAddress.getHostAddress();
+        } catch (UnknownHostException e) {
+
+        }
+        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.shodan.io/shodan/host/" + ipAddress + "?key=CqF3WCuJSXGLO8qxK3fnpUwmiOBzICiC&minify=true")
                 .get()
